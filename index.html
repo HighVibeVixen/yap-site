@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pool Rules — who are you at the pool party?</title>
+<meta name="description" content="The dating pool has pee in it. Take the Pool Rules quiz, find out who you are at the pool party, and get early access to Yap — the clean pool.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Nunito:ital,wght@0,400;0,600;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FFF7EC; --ink:#2A2440;
+  --aqua:#59C7D9; --aqua-deep:#2FA8BE; --aqua-light:#BDEDF4;
+  --coral:#FF6B8A; --sun:#FFC94D; --white:#fff;
+  --body:'Nunito',sans-serif; --display:'Shrikhand',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:0 20px}
+header{padding:20px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--display);font-size:24px;color:var(--coral);transform:rotate(-3deg)}
+.badge{background:var(--sun);border:2.5px solid var(--ink);border-radius:999px;padding:5px 12px;font-weight:800;font-size:11.5px;transform:rotate(2deg);box-shadow:2.5px 2.5px 0 var(--ink)}
+
+.screen{display:none;padding-bottom:60px}
+.screen.on{display:block}
+
+/* intro */
+.intro{text-align:center;padding-top:26px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,8.5vw,44px);line-height:1.14}
+h1 .pee{color:var(--sun);text-shadow:2px 2px 0 var(--ink)}
+h1 .aqua{color:var(--aqua-deep)}
+.sub{font-weight:600;color:#544D6E;max-width:38ch;margin:16px auto 26px}
+.sub strong{color:var(--coral)}
+
+.btn{background:var(--coral);color:var(--white);border:2.5px solid var(--ink);border-radius:14px;padding:15px 26px;font-family:var(--body);font-weight:800;font-size:17px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);min-height:50px}
+.btn:active{translate:2px 2px;box-shadow:0 0 0 var(--ink)}
+.btn:focus-visible{outline:3px solid var(--aqua-deep);outline-offset:2px}
+.btn.aqua{background:var(--aqua-deep)}
+.btn.ghost{background:var(--white);color:var(--ink)}
+
+/* quiz */
+.progress{height:14px;background:var(--white);border:2.5px solid var(--ink);border-radius:999px;overflow:hidden;margin:10px 0 24px}
+.fill{height:100%;background:linear-gradient(90deg,var(--aqua),var(--aqua-deep));width:0%;transition:width .35s ease;border-radius:999px}
+.qnum{font-weight:800;font-size:12.5px;color:var(--aqua-deep);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.qtext{font-family:var(--display);font-size:clamp(20px,5.6vw,26px);line-height:1.25;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{background:var(--white);border:2.5px solid var(--ink);border-radius:16px;padding:14px 16px;font-family:var(--body);font-weight:700;font-size:15.5px;text-align:left;cursor:pointer;box-shadow:3px 3px 0 rgba(42,36,64,.18);color:var(--ink);line-height:1.4}
+.opt:active{translate:2px 2px;box-shadow:0 0 0 rgba(42,36,64,.18)}
+.opt:focus-visible{outline:3px solid var(--aqua-deep);outline-offset:2px}
+
+/* result */
+.result-card{background:var(--white);border:3px solid var(--ink);border-radius:24px;padding:28px 22px;text-align:center;box-shadow:6px 7px 0 var(--coral);margin-top:14px}
+.avatar-ring{width:110px;height:110px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:54px;border:3px solid var(--ink)}
+.r-eyebrow{font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--aqua-deep)}
+.r-name{font-family:var(--display);font-size:clamp(28px,8vw,38px);margin:4px 0 8px}
+.r-tag{font-weight:800;font-style:italic;color:var(--coral);margin-bottom:14px}
+.r-desc{font-weight:600;color:#544D6E;font-size:15.5px;text-align:left}
+.r-desc strong{color:var(--ink)}
+.r-match{margin-top:16px;background:var(--aqua-light);border:2.5px solid var(--ink);border-radius:14px;padding:12px 14px;font-weight:700;font-size:14.5px}
+.share-row{display:flex;gap:10px;margin-top:20px}
+.share-row .btn{flex:1;font-size:15px;padding:13px 10px}
+
+.wl{margin-top:26px;text-align:center}
+.wl h2{font-family:var(--display);font-size:clamp(20px,5.5vw,26px);margin-bottom:6px}
+.wl p{font-weight:600;color:#544D6E;font-size:14.5px;margin-bottom:14px}
+.field{display:flex;gap:8px}
+input[type=email]{flex:1;background:var(--white);border:2.5px solid var(--ink);border-radius:14px;padding:14px 16px;font-family:var(--body);font-weight:600;font-size:16px;min-height:50px;color:var(--ink)}
+input[type=email]:focus-visible{outline:3px solid var(--aqua);outline-offset:2px}
+.success{display:none;background:var(--aqua-light);border:2.5px solid var(--ink);border-radius:14px;padding:15px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
+.fine{font-size:12.5px;font-weight:700;color:#6B6488;margin-top:10px}
+.lane{display:none;text-align:left;background:var(--white);border:2.5px solid var(--ink);border-radius:18px;padding:20px 18px;box-shadow:4px 4px 0 rgba(42,36,64,.18);margin-top:6px}
+.lane h3{font-family:var(--display);font-size:19px;margin-bottom:2px;text-align:center}
+.lane .lp{font-weight:600;color:#544D6E;font-size:13.5px;text-align:center;margin-bottom:16px}
+.lq{font-weight:800;font-size:14px;margin:14px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2.5px solid var(--ink);background:var(--cream);border-radius:999px;padding:9px 16px;font-family:var(--body);font-weight:800;font-size:14px;cursor:pointer;color:var(--ink);min-height:42px}
+.chip.sel{background:var(--aqua);color:var(--ink);box-shadow:2.5px 2.5px 0 var(--ink)}
+.chip:focus-visible{outline:3px solid var(--aqua-deep);outline-offset:2px}
+input[type=text]{width:100%;background:var(--cream);border:2.5px solid var(--ink);border-radius:12px;padding:12px 14px;font-family:var(--body);font-weight:600;font-size:16px;min-height:46px;color:var(--ink)}
+input[type=text]:focus-visible{outline:3px solid var(--aqua);outline-offset:2px}
+.lane .btn{width:100%;margin-top:18px}
+.skip{display:block;margin:12px auto 0;background:none;border:none;font-family:var(--body);font-weight:800;color:#6B6488;font-size:13px;cursor:pointer;text-decoration:underline}
+.lerr{display:none;color:var(--coral);font-weight:800;font-size:13px;margin-top:10px;text-align:center}
+.retake{margin-top:22px;text-align:center}
+.retake button{background:none;border:none;font-family:var(--body);font-weight:800;color:var(--aqua-deep);font-size:14px;cursor:pointer;text-decoration:underline}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);font-weight:800;font-size:14px;padding:12px 20px;border-radius:999px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="logo">yap!</div>
+  <div class="badge">pool rules 📋</div>
+</header>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="screen on" id="s-intro">
+    <div class="intro">
+      <h1>the dating pool has <span class="pee">pee</span> in it.<br>ours doesn't.<br><span class="aqua">who are you at the pool party?</span></h1>
+      <p class="sub">12 questions. No wrong answers. Find out who you are when the floaties come out — and get early access to <strong>Yap</strong>, the app where you fall for a voice before a face.</p>
+      <button class="btn" onclick="startQuiz()">Take the quiz 🏊</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen" id="s-quiz">
+    <div class="progress" role="progressbar" aria-label="Quiz progress"><div class="fill" id="fill"></div></div>
+    <div class="qnum" id="qnum"></div>
+    <div class="qtext" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="s-result">
+    <div class="result-card">
+      <div class="avatar-ring" id="rAvatar"></div>
+      <div class="r-eyebrow">at the pool party, you're</div>
+      <div class="r-name" id="rName"></div>
+      <div class="r-tag" id="rTag"></div>
+      <p class="r-desc" id="rDesc"></p>
+      <div class="r-match" id="rMatch"></div>
+      <div class="share-row">
+        <button class="btn aqua" onclick="shareResult()">Share it 🔗</button>
+        <button class="btn ghost" onclick="copyResult()">Copy</button>
+      </div>
+    </div>
+
+    <div class="wl">
+      <h2>the clean pool opens soon.</h2>
+      <p>Your archetype saves your spot. Early swimmers pick usernames first + get the founding badge.</p>
+      <form id="wl" novalidate>
+        <div class="field">
+          <input type="email" id="email" placeholder="your@email.com" autocomplete="email" required aria-label="Email address">
+          <button class="btn" type="submit">Save my spot 🛟</button>
+        </div>
+      </form>
+      <div class="lane" id="lane">
+        <h3>reserve your lane 🏊</h3>
+        <p class="lp">30 seconds. This is how we make sure your pool actually has your people in it.</p>
+
+        <div class="lq">I am a…</div>
+        <div class="chips" id="cGender" role="radiogroup" aria-label="Gender">
+          <button type="button" class="chip" data-v="woman">woman</button>
+          <button type="button" class="chip" data-v="man">man</button>
+          <button type="button" class="chip" data-v="nonbinary">nonbinary</button>
+          <button type="button" class="chip" data-v="self-describe">let me yap about it</button>
+        </div>
+
+        <div class="lq">I want to meet…</div>
+        <div class="chips" id="cPref" role="radiogroup" aria-label="Who you want to meet">
+          <button type="button" class="chip" data-v="women">women</button>
+          <button type="button" class="chip" data-v="men">men</button>
+          <button type="button" class="chip" data-v="everyone">everyone</button>
+          <button type="button" class="chip" data-v="friends-only">just friends to yap with</button>
+        </div>
+
+        <div class="lq">Where's your pool? (city or ZIP)</div>
+        <input type="text" id="loc" placeholder="e.g. Philly or 08054" autocomplete="postal-code" aria-label="City or ZIP code">
+
+        <div class="lq">My age:</div>
+        <div class="chips" id="cMyAge" role="radiogroup" aria-label="Your age range">
+          <button type="button" class="chip" data-v="18-24">18–24</button>
+          <button type="button" class="chip" data-v="25-34">25–34</button>
+          <button type="button" class="chip" data-v="35-44">35–44</button>
+          <button type="button" class="chip" data-v="45-54">45–54</button>
+          <button type="button" class="chip" data-v="55+">55+</button>
+        </div>
+
+        <div class="lq">Match me with ages: <span style="font-weight:600;color:#6B6488">(pick all that apply)</span></div>
+        <div class="chips" id="cAgePref" role="group" aria-label="Age ranges you want to match with">
+          <button type="button" class="chip" data-v="18-24">18–24</button>
+          <button type="button" class="chip" data-v="25-34">25–34</button>
+          <button type="button" class="chip" data-v="35-44">35–44</button>
+          <button type="button" class="chip" data-v="45-54">45–54</button>
+          <button type="button" class="chip" data-v="55+">55+</button>
+        </div>
+
+        <div class="lerr" id="lerr">Almost! Pick your answers above — including your age and at least one age range to match with.</div>
+        <button class="btn" type="button" onclick="submitLane()">Lock my lane 🔒</button>
+        <button class="skip" type="button" onclick="skipLane()">skip for now</button>
+      </div>
+
+      <div class="success" id="ok">You're in! 🎉 The pool called — it's excited to meet you.</div>
+      <p class="fine">Free to join · certified pee-free since 2026 💧</p>
+    </div>
+
+    <div class="retake"><button onclick="startQuiz()">retake the quiz</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied! 🎉</div>
+
+<script>
+// ---------- archetypes ----------
+// keys: CB Cannonballer, DD Deep End Diver, SB Sunbather, LG Lifeguard,
+//        MP Marco Polo, TD Toe Dipper, NS Night Swimmer, HO The Host
+const TYPES={
+  CB:{name:"The Cannonballer",emoji:"💥",color:"#FFC94D",tag:"chaotic good. loud entrance. loved anyway.",
+    desc:"You don't ease into anything — pools, friendships, feelings. People act annoyed when you soak them and then spend the whole party orbiting you, because your energy gives everyone else <strong>permission to stop performing.</strong> You're not 'too much.' You're the reason it was fun.",
+    match:"You match dangerously well with The Sunbather — someone has to dry off what you splash."},
+  DD:{name:"The Deep End Diver",emoji:"🤿",color:"#59C7D9",tag:"small talk allergy. big talk fluency.",
+    desc:"You've asked a stranger about their childhood within four minutes of meeting them. Shallow-end chatter physically drains you, but give you one honest conversation and you'll <strong>remember it for years.</strong> You don't have many people. You have deep ones. That's the design, not the flaw.",
+    match:"You match with The Night Swimmer — the only other person still talking at 1am."},
+  SB:{name:"The Sunbather",emoji:"😎",color:"#FF9E5C",tag:"sees everything. says little. misses nothing.",
+    desc:"You look like you're doing nothing. You're doing everything — reading the whole party, clocking who's flirting, who's faking, who needs checking on. Your energy is <strong>selective, not scarce,</strong> and when you finally speak, everybody leans in. Observation is your love language's first draft.",
+    match:"You match with The Cannonballer — you narrate, they detonate."},
+  LG:{name:"The Lifeguard",emoji:"🛟",color:"#FF6B8A",tag:"checks on the strong friend.",
+    desc:"You count heads without realizing it. You're the one who notices when someone's been quiet too long, who walks people to their car, who texts 'did you get home safe.' Your care is <strong>constant and mostly invisible</strong> — which is exactly why the right person noticing it will wreck you (positively).",
+    match:"You match with The Toe Dipper — you make slow feel safe."},
+  MP:{name:"The Marco Polo",emoji:"🏐",color:"#7BC98F",tag:"starts the game. links the strangers.",
+    desc:"Every party splits into little islands until you show up. You're the human bridge — the one who starts the game, makes the introductions, and somehow knows everyone's name by hour two. Connection isn't networking to you, it's <strong>play.</strong> People leave your orbit with new friends and don't know how it happened.",
+    match:"You match with The Deep End Diver — you open the room, they open the person."},
+  TD:{name:"The Toe Dipper",emoji:"🦶",color:"#C9A8F0",tag:"slow to enter. impossible to remove.",
+    desc:"You test every water — pools, people, plans. Not because you're scared, because you're <strong>discerning.</strong> The ones who wait out your warm-up get the most loyal person at the party. You've watched enough cannonballs go wrong to know: the best entrances are the ones you actually meant.",
+    match:"You match with The Lifeguard — patience meets patience."},
+  NS:{name:"The Night Swimmer",emoji:"🌙",color:"#5B6FD8",tag:"comes alive when the sun clocks out.",
+    desc:"The party doesn't start for you until half the people leave. Daylight-you is fine; night-you is <strong>the real one</strong> — funnier, softer, honest in ways that surprise even you. You're the 1am voice note friend, the deep-cut playlist friend. The pool at night is a different pool, and it's yours.",
+    match:"You match with The Deep End Diver — nobody else can keep up after midnight."},
+  HO:{name:"The Host",emoji:"🎉",color:"#2FA8BE",tag:"planned the party. remembered your drink.",
+    desc:"This party exists because of you and you'll never mention it. You remember allergies, exes to not bring up, and exactly who needed the shallow-end seat. Organizing is how you say <strong>I love you</strong> without the vulnerability of saying it. One day someone will plan something for YOU and you won't know how to act.",
+    match:"You match with The Marco Polo — you build the party, they make it breathe."}
+};
+
+// ---------- questions ----------
+// each option: [text, typeKey]
+const QS=[
+ {q:"Your ex is at the function. Uninvited. What's the play?",o:[
+   ["Greet them louder than necessary. Make it everyone's problem.","CB"],
+   ["Nothing. I've been watching them from across the room for 20 minutes.","SB"],
+   ["Corner them. We're resolving this tonight, actually.","DD"],
+   ["Reorganize the entire seating chart so they never sit down.","HO"]]},
+ {q:"You have to tell one truth to the whole room. Which one gets said?",o:[
+   ["I have never once read the group chat.","NS"],
+   ["I know all of your business and I've said nothing.","SB"],
+   ["I looked up everyone's birth chart before I got here.","MP"],
+   ["I've cried in this house. Recently. Different room.","MP"]]},
+ {q:"Pick your villain origin story:",o:[
+   ["Nobody came to my thing after saying they would.","HO"],
+   ["I trusted fast and got humbled in HD.","TD"],
+   ["Someone told me to calm down.","CB"],
+   ["I was the strong friend for six years straight.","LG"]]},
+ {q:"It's 3am. You are absolutely doing what?",o:[
+   ["Explaining my worldview to someone who did not ask.","DD"],
+   ["Wide awake and glorious. This is my peak.","NS"],
+   ["Asleep. My peace has a bedtime and it's non-negotiable.","TD"],
+   ["Making sure everyone got home. Then sleeping.","LG"]]},
+ {q:"Somebody has to make the toast. Unfortunately.",o:[
+   ["Me. Unprepared. It slaps anyway.","CB"],
+   ["Me. Written last week. Rehearsed. Emotional.","HO"],
+   ["Not me. But I'll rate everyone else's silently.","SB"],
+   ["Me, but it turns into a 9-minute meditation on mortality.","DD"]]},
+ {q:"How do you actually get in a pool? Be honest with yourself.",o:[
+   ["Airborne. Witnesses mandatory.","CB"],
+   ["Stairs. One step per emotional checkpoint.","TD"],
+   ["Straight to the deep end. Shallow water is for cowards.","DD"],
+   ["After dark, when it's quiet and it belongs to me.","NS"]]},
+ {q:"Your love language, and I need the truth:",o:[
+   ["A 4-minute voice note about nothing whatsoever.","NS"],
+   ["Remembering the thing you mentioned once in March.","LG"],
+   ["Insulting you with an intimacy that borders on romantic.","CB"],
+   ["Feeding you. Sit down. I made too much on purpose.","HO"]]},
+ {q:"You have 30 seconds alone with someone's phone. You:",o:[
+   ["Set their wallpaper to my face. Chaos is a service.","CB"],
+   ["Add myself to their favorites. Subtle. Permanent.","MP"],
+   ["Nothing. But I saw everything I needed to see.","SB"],
+   ["Turn their brightness down and their alarm on. They need rest.","LG"]]},
+ {q:"Group project. Everybody's gone silent. What now?",o:[
+   ["I do the whole thing and mention it forever.","HO"],
+   ["I make it a party and somehow it gets done.","MP"],
+   ["I go quiet too. We can all fail together, respectfully.","SB"],
+   ["I text one person at 1am and we build the whole thing.","NS"]]},
+ {q:"Rate your entrance to a room full of strangers:",o:[
+   ["Loud. Immediate. Someone's already laughing.","CB"],
+   ["I know three people's names within ten minutes. Don't ask how.","MP"],
+   ["I do a full lap first. Reconnaissance before commitment.","TD"],
+   ["I find the one person standing alone and go straight to them.","LG"]]},
+ {q:"Somebody says 'I'm fine' and is visibly not fine. You:",o:[
+   ["'You're lying. Sit down. What happened.'","DD"],
+   ["'Okay.' Then I show up at their door with food anyway.","LG"],
+   ["Say nothing now, clock everything, bring it up in three days.","TD"],
+   ["Plan something low-stakes so they don't have to ask for help.","HO"]]},
+ {q:"Last one. The party's over. Where are you actually?",o:[
+   ["Walking people out. Counting heads. 'Text me, please.'","LG"],
+   ["In the deep end with one person, rebuilding their whole life.","DD"],
+   ["Still in the water. It's not over, it just got smaller.","NS"],
+   ["Cleaning while insisting nobody help. Somebody please help.","HO"]]}
+];
+
+// ---------- engine ----------
+let idx=0,scores={};
+function startQuiz(){
+  idx=0;scores={};
+  show('s-quiz');render();
+  window.scrollTo({top:0});
+}
+function render(){
+  const q=QS[idx];
+  document.getElementById('fill').style.width=((idx)/QS.length*100)+'%';
+  document.getElementById('qnum').textContent=`Question ${idx+1} of ${QS.length}`;
+  document.getElementById('qtext').textContent=q.q;
+  const box=document.getElementById('opts');box.innerHTML='';
+  q.o.forEach(([t,k])=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=t;
+    b.onclick=()=>{scores[k]=(scores[k]||0)+1;idx++;
+      idx<QS.length?render():finish();window.scrollTo({top:0});};
+    box.appendChild(b);
+  });
+}
+let resultKey='CB';
+function finish(){
+  resultKey=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+  const t=TYPES[resultKey];
+  const av=document.getElementById('rAvatar');
+  av.textContent=t.emoji;av.style.background=t.color;
+  document.getElementById('rName').textContent=t.name;
+  document.getElementById('rTag').textContent=t.tag;
+  document.getElementById('rDesc').innerHTML=t.desc;
+  document.getElementById('rMatch').textContent="💘 "+t.match;
+  show('s-result');
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+
+// ---------- share ----------
+function shareText(){const t=TYPES[resultKey];
+  return `I'm ${t.name} ${t.emoji} at the pool party. The dating pool has pee in it — come find out who YOU are in the clean one:`;}
+async function shareResult(){
+  const data={title:"Pool Rules",text:shareText(),url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch(e){}}
+  else copyResult();
+}
+function copyResult(){
+  navigator.clipboard.writeText(shareText()+" "+location.href).then(()=>{
+    const t=document.getElementById('toast');t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),1800);
+  });
+}
+
+// ---------- waitlist (two-step: email first, lane second) ----------
+// SWAP THESE TWO VALUES: Supabase Dashboard → Settings → API
+const SUPABASE_URL="https://YOUR_PROJECT.supabase.co";
+const SUPABASE_ANON_KEY="YOUR_ANON_KEY";
+let savedEmail="";
+
+async function post(payload){
+  try{
+    await fetch(SUPABASE_URL+"/rest/v1/waitlist_signups",{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,
+               'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+      body:JSON.stringify(payload)});
+  }catch(err){/* never block the user on a network hiccup */}
+}
+
+// STEP 1 — email submit: lead captured immediately, then reveal lane
+document.getElementById('wl').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const em=document.getElementById('email');
+  if(!em.value||!em.value.includes('@')){em.focus();return;}
+  savedEmail=em.value;
+  post({email:savedEmail,archetype:TYPES[resultKey].name,step:'email',source:'pool-rules-quiz'});
+  e.target.style.display='none';
+  document.getElementById('lane').style.display='block';
+  document.getElementById('lane').scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+// chip behavior: single-select groups
+['cGender','cPref','cMyAge'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',e=>{
+    const b=e.target.closest('.chip');if(!b)return;
+    document.getElementById(id).querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+    b.classList.add('sel');
+  });
+});
+// multi-select group (age preference)
+document.getElementById('cAgePref').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  b.classList.toggle('sel');
+});
+const pick=id=>{const s=document.getElementById(id).querySelector('.chip.sel');return s?s.dataset.v:"";};
+const pickMulti=id=>[...document.getElementById(id).querySelectorAll('.chip.sel')].map(c=>c.dataset.v);
+
+// STEP 2 — lane submit: demographics keyed to the same email
+function submitLane(){
+  const gender=pick('cGender'),pref=pick('cPref'),myAge=pick('cMyAge'),
+        agePref=pickMulti('cAgePref'),loc=document.getElementById('loc').value.trim();
+  if(!gender||!pref||!myAge||agePref.length===0){document.getElementById('lerr').style.display='block';return;}
+  post({email:savedEmail,archetype:TYPES[resultKey].name,step:'lane',
+        gender:gender,looking_for:pref,my_age:myAge,age_pref:agePref.join(','),
+        location:loc,age_confirmed:'18+',source:'pool-rules-quiz'});
+  finishWaitlist();
+}
+function skipLane(){finishWaitlist();}
+function finishWaitlist(){
+  document.getElementById('lane').style.display='none';
+  document.getElementById('ok').style.display='block';
+}
+</script>
+</body>
+</html>
